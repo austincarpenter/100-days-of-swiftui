@@ -13,7 +13,7 @@ var string = """
 This string \
 goes over multiple \
 lines without line breaks.
-""" //This string goes over multiple lines without line breaks.
+""" //"This string goes over multiple lines without line breaks."
 ```
 
 ### Day 2 – Arrays, dictionaries, sets, and enums
@@ -40,7 +40,7 @@ let talking = Activity.talking(topic: "football")
 We can then test for the values using a `switch` statement:
 ```swift
 switch talking { //Accessing associated values
-    case .talking(topic: "football"): print("⚽️")
+    case .talking(topic: "football"): print("⚽️") //"⚽️"
     case .talking(topic: "baseball"): print("⚾️")
     case .talking(topic: "tennis"): print("🎾")
     default: print("❓")
