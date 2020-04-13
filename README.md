@@ -114,3 +114,53 @@ var myNum = 10
 doubleInPlace(number: &myNum) //20
 ```
 Lastly, the **print function** actually has **more than one parameter**: `separator`, which by default is  `" "` (space) and is used to separate the values to be printed; and `terminator`, which by default is `"."` and is used at the end of the output.
+
+### Day 6 – Closures (Part one)
+Ah closures, how confusing they can be! I found however, that once the closures and their uses became *more complicated*, funnily enough, I understood them *more*. In the simpler examples, I found myself thinking: "Why not just use a function here instead?" which became annoying quickly.
+
+In my little experience with closures so far, I find functions which incorporate `for` loops inside which is a closure to be easier to understand. For example:
+
+```swift
+func repeatAction(count: Int, action: () -> Void) {
+	for _ in 0..<count {
+		action()
+	}
+}
+repeatAction(count: 5) {
+	print("Hello, world!")
+}
+```
+This `for` loop however could still however be extracted from the function and used in-line, therefore eliminating the need for the closure entirely. This is a very simple example however, so with more complex behaviour inside the function, the code above wouldn't be so redundant.
+
+### Day 7 – Closures (Part two)
+Closures are beginning to make more sense. While they are still settling inside my brain I won't point out too much of what I have learned, because it was basically everything Paul covered. Below is an example from today which I extended which shows the power of closures. It allows the user to generate primes and process each one using a closure:
+
+```swift
+func processPrimes(upToButNotIncluding n: Int, using closure: (Int) -> Void) {
+    let primes = {...}
+    for prime in primes {
+        closure(prime)
+    }
+}
+processPrimes(upToButNotIncluding: 10) { prime in
+    print("\(prime) is a prime number.")
+    print("\(prime) squared is \(prime * prime).")
+}
+```
+The closure in the `processPrimes(upToButNotIncluding:)` function can also be defined elsewhere and then reused, as well as others which may be used later on.
+```swift
+let printSquared = { (number: Int) in
+    print("\(number) is a prime number.")
+    print("\(number) squared is \(number * number)")
+}
+
+let printCubed = { (number: Int) in
+    print("\(number) is a prime number.")
+    print("\(number) cubed is \(number * number * number)")
+}
+```
+These could then be added to an array or defined in an `enum` so that the user may select the closure to use from a variety of options, however that's getting a bit more complicated.
+```swift
+processPrimes(upToButNotIncluding: 10, using: printSquared)
+processPrimes(upToButNotIncluding: 4, using: printCubed)
+```
