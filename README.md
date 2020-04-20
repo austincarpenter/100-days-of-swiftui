@@ -277,7 +277,7 @@ This doesn't however allow for different errors to be handled individually, as n
 
 Lastly, the notion of **failable initialisers**, which are simply initialisers whose `init` keyword may be suffixed with `?` to allow them to return nil if a certain condition is not met (for example) in the initialiser body.
 
-## Days 13-15 – Consolidation
+## Days 13-15 – Consolidation I
 I chose to skim read this section as I had just completed the 15 day review of the language and felt with my documentation and experience with the language I could more or less dive into SwiftUI.
 
 ## Days 16-24 – Starting SwiftUI
@@ -289,3 +289,5 @@ I chose to skim read this section as I had just completed the 15 day review of t
 ### Days 20-22 – Project 2: GuessTheFlag
 
 ### Days 34-24 – Project 3: ViewsAndModifiers
+
+## Day 25 – Consolidation II
