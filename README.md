@@ -279,3 +279,7 @@ Lastly, the notion of **failable initialisers**, which are simply initialisers w
 
 ## Days 13-15 – Consolidation
 I chose to skim read this section as I had just completed the 15 day review of the language and felt with my documentation and experience with the language I could more or less dive into SwiftUI.
+
+## Days 16-24 – Starting SwiftUI
+
+### Days 16-18 – Project 1: WeSplit
