@@ -28,20 +28,38 @@ struct ContentView: View {
     @State private var userChoice = 0
     
     @State private var score = 0
-    @State private var round = 0
+    @State private var round = 1
     
-    @State private var showEndOfRoundAlert = false
-    @State private var showEndOfGameAlert = false
+    @State private var showEndOfRoundGameAlert = false
     
     @State private var lastResult: Outcome = .draw
     
-    func userOutcome() -> Outcome {
+    var userOutcome: Outcome {
+        //Same
         if userChoice == computerChoice {
             return .draw
-        } else if userChoice == 0 && computerChoice == 2 {
+        }
+        else if userChoice == 0 && computerChoice == 2 {
             return .win
-        } else {
+        }
+        //Other wise if user's move comes after computer's in array, win, if not, loss
+        else {
             return userChoice > computerChoice ? .win : .loss
+        }
+    }
+    
+    var gameOutcome: Outcome {
+        //User scores less than half of points, loss
+        if score < 5 {
+            return .loss
+        }
+        //If more, win
+        else if score > 5 {
+            return .win
+        }
+        //Otherwise draw
+        else {
+            return .draw
         }
     }
 
@@ -72,22 +90,42 @@ struct ContentView: View {
                 }
             }
             Text("Score: \(score)  |  Round: \(round)")
-        }.alert(isPresented: $showEndOfRoundAlert) {
-            Alert(title: Text("End of Round"),
+        }.alert(isPresented: $showEndOfRoundGameAlert) {
+            //A bit 'hacky' as the round will go from 10 to 1 before the alert is presented.
+            Alert(title: Text("End of \(round == 1 ? "Game" : "Round")"),
                   message: Text(self.lastResult.rawValue),
-                  dismissButton: .default(Text("Next Round")))
+                  dismissButton: .default(Text("\(round == 1 ? "New Game" : "Next Round")")))
         }
     }
     
     func userMoved(_ move: Move) {
+        //Get (which move in terms of ordered set) user chose
         self.userChoice = Move.allCases.firstIndex(of: move)!
-        self.lastResult = self.userOutcome()
+        
+        //Save result
+        self.lastResult = self.userOutcome
+        
+        //If a win, augment score
         if self.lastResult == .win { self.score += 1 }
-        self.showEndOfRoundAlert = true
-        self.newRound()
+        
+        //If end of game, store game outcome, not round outcome
+        if round == 10 { lastResult = gameOutcome }
+        
+        //Show alert
+        self.showEndOfRoundGameAlert = true
+        
+        //Begin new round or game
+        self.newRoundOrGame()
     }
     
-    func newRound() {
+    func newRoundOrGame() {
+        //If needed, new game
+        if round == 10 {
+            round = 0
+            score = 0
+        }
+        
+        //New round
         round += 1
         possibleMoves.shuffle()
         computerChoice = Int.random(in: 0...2)
