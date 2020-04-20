@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ContentView_Challenges: View {
 
+    var useRedText: Bool { tipPercentages[tipPercentage] == 0 }
+    
     @State private var checkAmount = ""
     @State private var numberOfPeople = ""
     @State private var tipPercentage = 2
@@ -52,6 +54,7 @@ struct ContentView_Challenges: View {
                 }
                 Section(header: Text("Total amount")) {
                     Text("$\(grandTotal, specifier: "%.2f")")
+                        .foregroundColor(useRedText ? .red : .primary)
                 }
             }
             .navigationBarTitle("WeSplit")

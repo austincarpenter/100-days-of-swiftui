@@ -8,6 +8,16 @@
 
 import SwiftUI
 
+struct FlagImage: View {
+    var name: String
+    var body: some View {
+        Image(name)
+            .renderingMode(.original)
+            .cornerRadius(20, antialiased: true)
+            .shadow(color: .black, radius: 2)
+    }
+}
+
 struct ContentView_Challenges: View {
     
     @State private var showingScore = false
@@ -34,17 +44,11 @@ struct ContentView_Challenges: View {
                     Button(action: {
                         self.flagTapped(number)
                     }) {
-                        Image(self.countries[number])
-                        .renderingMode(.original)
-                        .cornerRadius(20, antialiased: true)
-                        .shadow(color: .black, radius: 2)
-                        //.clipShape(Capsule())
-                        //.overlay(Capsule().stroke(Color.black, lineWidth: 1))
+                        FlagImage(name: self.countries[number])
                     }
                 }
                 Text("Score: \(score)")
                     .foregroundColor(.white)
-                //Spacer()
             }
         }.alert(isPresented: $showingScore) {
             Alert(title: Text(scoreTitle), message: Text("Your score is \(score)."), dismissButton: .default(Text("Continue")) {
