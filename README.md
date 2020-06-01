@@ -291,3 +291,9 @@ I chose to skim read this section as I had just completed the 15 day review of t
 ### Days 34-24 – Project 3: ViewsAndModifiers
 
 ## Day 25 – Consolidation II
+
+## Days 26-34 – Expanding your skills
+
+### Days 26-28 – Project 4: BetterRest
+
+### Days 29-31 – Project 5: WordScramble
