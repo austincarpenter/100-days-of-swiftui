@@ -1,5 +1,5 @@
 //
-//  SwiftUIView+Challenges.swift
+//  ContentView+Challenges.swift
 //  BetterRest
 //
 //  Created by Austin Carpenter on 20/4/20.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct SwiftUIView_Challenges: View {
+struct ContentView_Challenges: View {
 
     @State private var wakeUp = defaultWakeTime
     @State private var sleepAmount = 8.0
@@ -94,6 +94,6 @@ struct SwiftUIView_Challenges: View {
 
 struct SwiftUIView_Challenges_Previews: PreviewProvider {
     static var previews: some View {
-        SwiftUIView_Challenges()
+        ContentView_Challenges()
     }
 }
