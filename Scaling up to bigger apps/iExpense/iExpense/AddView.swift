@@ -18,6 +18,8 @@ struct AddView: View {
     @State private var type = "Personal"
     @State private var amount = ""
     
+    @State private var showingAlert = false
+    
     static let types = ["Business", "Personal"]
     
     var body: some View {
@@ -38,10 +40,18 @@ struct AddView: View {
                     if let actualAmount = Int(self.amount) {
                         let item = ExpenseItem(name: self.name, type: self.type, amount: actualAmount)
                         self.expenses.items.append(item)
+                        self.presentationMode.wrappedValue.dismiss()
+                    } else {
+                        self.showingAlert = true
                     }
-                    self.presentationMode.wrappedValue.dismiss()
                 }
             )
+        }
+        //Challenge 2
+        .alert(isPresented: $showingAlert) { 
+            Alert(title: Text("Unable to add expense item"),
+                  message: Text("Please enter a whole number for the expense amount"),
+                  dismissButton: .default(Text("OK")))
         }
     }
 }
