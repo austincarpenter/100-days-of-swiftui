@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		422B730E2486838C004AE891 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422B730D2486838C004AE891 /* GameView.swift */; };
-		422B731024868396004AE891 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422B730F24868396004AE891 /* MenuView.swift */; };
+		422941242488B16A0034E839 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422941232488B16A0034E839 /* Extensions.swift */; };
+		4229412B2488B1D20034E839 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4229412A2488B1D20034E839 /* Enums.swift */; };
+		422941342488CA100034E839 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422941332488CA100034E839 /* ConfettiView.swift */; };
+		422941362488CA880034E839 /* Wrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422941352488CA880034E839 /* Wrap.swift */; };
 		422B7312248683A5004AE891 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422B7311248683A5004AE891 /* RoundedButton.swift */; };
 		422B731624874D6C004AE891 /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422B731524874D6C004AE891 /* Keypad.swift */; };
 		42CCD8B32485DAE700260ED7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CCD8B22485DAE700260ED7 /* AppDelegate.swift */; };
@@ -16,13 +18,14 @@
 		42CCD8B72485DAE700260ED7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CCD8B62485DAE700260ED7 /* ContentView.swift */; };
 		42CCD8B92485DAEA00260ED7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42CCD8B82485DAEA00260ED7 /* Assets.xcassets */; };
 		42CCD8BC2485DAEA00260ED7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42CCD8BB2485DAEA00260ED7 /* Preview Assets.xcassets */; };
-		42CCD8BF2485DAEA00260ED7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CCD8BD2485DAEA00260ED7 /* LaunchScreen.storyboard */; };
 		42CCD8C72485DB2B00260ED7 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CCD8C62485DB2B00260ED7 /* Question.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		422B730D2486838C004AE891 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		422B730F24868396004AE891 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		422941232488B16A0034E839 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		4229412A2488B1D20034E839 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		422941332488CA100034E839 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConfettiView.swift; path = "MultiplicationGame/Extra Views/ConfettiView.swift"; sourceTree = SOURCE_ROOT; };
+		422941352488CA880034E839 /* Wrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrap.swift; sourceTree = "<group>"; };
 		422B7311248683A5004AE891 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		422B731524874D6C004AE891 /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
 		42CCD8AF2485DAE700260ED7 /* MultiplicationGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiplicationGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -31,7 +34,6 @@
 		42CCD8B62485DAE700260ED7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		42CCD8B82485DAEA00260ED7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42CCD8BB2485DAEA00260ED7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		42CCD8BE2485DAEA00260ED7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42CCD8C02485DAEA00260ED7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42CCD8C62485DB2B00260ED7 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -47,6 +49,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		422941252488B1740034E839 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4229412A2488B1D20034E839 /* Enums.swift */,
+				42CCD8C62485DB2B00260ED7 /* Question.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		422941262488B1800034E839 /* Extra Views */ = {
+			isa = PBXGroup;
+			children = (
+				422941332488CA100034E839 /* ConfettiView.swift */,
+				422B7311248683A5004AE891 /* RoundedButton.swift */,
+				422B731524874D6C004AE891 /* Keypad.swift */,
+				422941352488CA880034E839 /* Wrap.swift */,
+			);
+			path = "Extra Views";
+			sourceTree = "<group>";
+		};
+		422941292488B1BC0034E839 /* Main Views */ = {
+			isa = PBXGroup;
+			children = (
+				42CCD8B62485DAE700260ED7 /* ContentView.swift */,
+			);
+			path = "Main Views";
+			sourceTree = "<group>";
+		};
 		42CCD8A62485DAE700260ED7 = {
 			isa = PBXGroup;
 			children = (
@@ -68,14 +98,11 @@
 			children = (
 				42CCD8B22485DAE700260ED7 /* AppDelegate.swift */,
 				42CCD8B42485DAE700260ED7 /* SceneDelegate.swift */,
-				42CCD8B62485DAE700260ED7 /* ContentView.swift */,
-				422B730F24868396004AE891 /* MenuView.swift */,
-				422B730D2486838C004AE891 /* GameView.swift */,
-				422B7311248683A5004AE891 /* RoundedButton.swift */,
-				422B731524874D6C004AE891 /* Keypad.swift */,
-				42CCD8C62485DB2B00260ED7 /* Question.swift */,
+				422941292488B1BC0034E839 /* Main Views */,
+				422941262488B1800034E839 /* Extra Views */,
+				422941252488B1740034E839 /* Model */,
+				422941232488B16A0034E839 /* Extensions.swift */,
 				42CCD8B82485DAEA00260ED7 /* Assets.xcassets */,
-				42CCD8BD2485DAEA00260ED7 /* LaunchScreen.storyboard */,
 				42CCD8C02485DAEA00260ED7 /* Info.plist */,
 				42CCD8BA2485DAEA00260ED7 /* Preview Content */,
 			);
@@ -148,7 +175,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42CCD8BF2485DAEA00260ED7 /* LaunchScreen.storyboard in Resources */,
 				42CCD8BC2485DAEA00260ED7 /* Preview Assets.xcassets in Resources */,
 				42CCD8B92485DAEA00260ED7 /* Assets.xcassets in Resources */,
 			);
@@ -161,29 +187,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				422941342488CA100034E839 /* ConfettiView.swift in Sources */,
 				42CCD8B32485DAE700260ED7 /* AppDelegate.swift in Sources */,
-				422B731024868396004AE891 /* MenuView.swift in Sources */,
+				422941242488B16A0034E839 /* Extensions.swift in Sources */,
+				4229412B2488B1D20034E839 /* Enums.swift in Sources */,
 				422B7312248683A5004AE891 /* RoundedButton.swift in Sources */,
 				42CCD8C72485DB2B00260ED7 /* Question.swift in Sources */,
+				422941362488CA880034E839 /* Wrap.swift in Sources */,
 				42CCD8B52485DAE700260ED7 /* SceneDelegate.swift in Sources */,
 				422B731624874D6C004AE891 /* Keypad.swift in Sources */,
 				42CCD8B72485DAE700260ED7 /* ContentView.swift in Sources */,
-				422B730E2486838C004AE891 /* GameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		42CCD8BD2485DAEA00260ED7 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				42CCD8BE2485DAEA00260ED7 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		42CCD8C12485DAEA00260ED7 /* Debug */ = {

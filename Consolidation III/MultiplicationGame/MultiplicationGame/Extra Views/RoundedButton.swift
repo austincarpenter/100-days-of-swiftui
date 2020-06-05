@@ -8,6 +8,27 @@
 
 import SwiftUI
 
+struct RoundedButton: View {
+    
+    var text: String
+    var font: Font = .body
+    var filled: Bool = false
+    var accentColor: Color = .blue
+    var maxHeight: CGFloat = 75
+    var action: () -> Void = {}
+    
+    var body: some View {
+        Button(action: action) {
+            HStack {
+            Spacer()
+            Text(text)
+            Spacer()
+            }
+        }
+        .buttonStyle(RoundedButtonStyle(font: font, filled: filled, accentColor: accentColor, maxHeight: maxHeight))
+    }
+}
+
 struct RoundedButtonStyle: ButtonStyle {
     
     var font: Font = .body
@@ -32,26 +53,7 @@ struct RoundedButtonStyle: ButtonStyle {
             .animation(.easeInOut(duration: 0.25))
     }
 }
-struct RoundedButton: View {
-    
-    var text: String
-    var font: Font = .body
-    var filled: Bool = false
-    var accentColor: Color = .blue
-    var maxHeight: CGFloat = 75
-    var action: () -> Void = {}
-    
-    var body: some View {
-        Button(action: action) {
-            HStack {
-            Spacer()
-            Text(text)
-            Spacer()
-            }
-        }
-        .buttonStyle(RoundedButtonStyle(font: font, filled: filled, accentColor: accentColor, maxHeight: maxHeight))
-    }
-}
+
 
 struct RoundedButton_Previews: PreviewProvider {
     static var previews: some View {

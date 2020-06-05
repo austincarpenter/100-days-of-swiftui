@@ -8,11 +8,7 @@
 
 import SwiftUI
 
-extension EdgeInsets {
-    init(all inset: CGFloat) {
-        self.init(top: -inset, leading: -inset, bottom: -inset, trailing: -inset)
-    }
-}
+
 struct Keypad: View {
 
     var font: Font = .title
@@ -58,24 +54,6 @@ struct Keypad: View {
                 }
             }
         }.padding(EdgeInsets(all: self.padding))
-
-        // GridStack<AnyView>(rows: 3, columns: 3, padding: 10) { (row, column) in
-        //     let value = "\((row) * 3 + (column + 1))"
-        //     return AnyView(
-        //         RoundedButton(filled: false, text: value, accentColor: .blue) {
-        //         self.currentAnswer = (self.currentAnswer == "0" ? "\(value)" : self.currentAnswer + "\(value)")
-        //     }.font(.title))
-        // }
-        // HStack(spacing: 20) {
-        //     RoundedButton(filled: false, text: "0", accentColor: .blue) {
-        //         self.currentAnswer = (self.currentAnswer == "0" ? "0" : self.currentAnswer + "0")
-        //     }.font(.title)
-        //     .frame(width: 150)
-        //     RoundedButton(filled: false, text: "←", accentColor: .red) {
-        //         self.currentAnswer = (self.currentAnswer == "0" || self.currentAnswer.count == 1 ? "0" : String(self.currentAnswer.dropLast()))
-        //     }.font(.title)
-        //     .frame(width: 65)
-        // }
     }
 }
 
