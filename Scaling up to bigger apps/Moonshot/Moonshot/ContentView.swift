@@ -10,13 +10,14 @@ import SwiftUI
 
 struct ContentView: View {
     
-    let astronauts: [Astronaut] = Bundle.main.decode("astronauts.json")
-    let missions: [Mission] = Bundle.main.decode("missions.json")
+    var viewModel = ViewModel()
+    
+    @State private var showsLaunchDates = true
     
     var body: some View {
         NavigationView {
-            List(missions) { mission in
-                NavigationLink(destination: MissionView(mission: mission, astronauts: self.astronauts)) {
+            List(viewModel.missions) { mission in
+                NavigationLink(destination: MissionView(mission: mission, viewModel: self.viewModel)) {
                     Image(mission.image)
                         .resizable()
                         .scaledToFit()
@@ -25,13 +26,25 @@ struct ContentView: View {
                     VStack(alignment: .leading) {
                         Text(mission.displayName)
                             .font(.headline)
-                        Text(mission.formattedLaunchDate)
+                        Text(self.showsLaunchDates ? mission.formattedLaunchDate : self.crewNamesForMission(mission))
+                            .font(self.showsLaunchDates ? .body : .callout)
                     }
                 }
                 
             }
             .navigationBarTitle("Moonshot")
+            //Challenge 3
+            .navigationBarItems(trailing: Button(action: {
+                self.showsLaunchDates.toggle()
+            }) {
+                (showsLaunchDates ? Image(systemName: "person.2.fill") : Image(systemName: "calendar"))
+                    .imageScale(.large)
+            })
         }
+    }
+    
+    func crewNamesForMission(_ mission: Mission) -> String {
+        self.viewModel.astronautsForMission(mission: mission).map{$0.name}.joined(separator: ", ")
     }
 }
 

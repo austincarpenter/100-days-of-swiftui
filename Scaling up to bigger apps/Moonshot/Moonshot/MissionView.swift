@@ -15,7 +15,7 @@ struct MissionView: View {
     }
     
     let mission: Mission
-    let astronauts: [CrewMember]
+    let viewModel: ViewModel
     
     var body: some View {
         GeometryReader { geometry in
@@ -27,6 +27,11 @@ struct MissionView: View {
                         .frame(maxWidth: geometry.size.width * 0.7)
                         .padding(.bottom)
                         .padding(.top)
+                    //Challenge 1
+                    Text("Launch Date: " + self.mission.formattedLaunchDate)
+                        .bold()
+                        .padding(.horizontal)
+                        .frame(width: geometry.size.width, alignment: .leading)
                     Text(self.mission.description)
                         .padding(.horizontal)
                     Text("Crew")
@@ -35,10 +40,10 @@ struct MissionView: View {
                         .padding(.top)
                         .padding(.horizontal)
                         .frame(width: geometry.size.width, alignment: .leading)
-                    ForEach(self.astronauts, id: \.role) { crewMember in
-                        NavigationLink(destination: AstronautView(astronaut: crewMember.astronaut)) {
+                    ForEach(self.viewModel.astronautsForMission(mission: self.mission), id: \.id) { astronaut in
+                        NavigationLink(destination: AstronautView(astronaut: astronaut, viewModel: self.viewModel)) {
                             HStack {
-                                Image(crewMember.astronaut.id)
+                                Image(astronaut.id)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 60, height: 60)
@@ -46,11 +51,13 @@ struct MissionView: View {
                                     .overlay(Circle()
                                         .stroke(Color.secondary, lineWidth: 1))
                                 VStack(alignment: .leading) {
-                                    Text(crewMember.astronaut.name)
+                                    Text(astronaut.name)
                                         .font(.headline)
-                                    Text(crewMember.role)
-                                        .font(crewMember.role == "Commander" ? Font.body.bold() : Font.body)
-                                        .foregroundColor(.secondary)
+                                    self.viewModel.crewRoleForAstronaut(astronaut, andMission: self.mission).map {
+                                        Text($0)
+                                            .font($0 == "Commander" ? Font.body.bold() : Font.body)
+                                            .foregroundColor(.secondary)
+                                    }
                                 }
                                 Spacer()
                             }.padding(.horizontal)
@@ -63,28 +70,11 @@ struct MissionView: View {
         }
         .navigationBarTitle(Text(mission.displayName), displayMode: .inline)
     }
-    
-    init(mission: Mission, astronauts: [Astronaut]) {
-        self.mission = mission
-        
-        var matches = [CrewMember]()
-        
-        for member in mission.crew {
-            if let match = astronauts.first(where: { $0.id == member.name }) {
-                matches.append(CrewMember(role: member.role, astronaut: match))
-            } else {
-                fatalError("Missing \(member)")
-            }
-        }
-        
-        self.astronauts = matches
-    }
 }
 
 struct MissionView_Previews: PreviewProvider {
-    static let missions: [Mission] = Bundle.main.decode("missions.json")
-    static let astronauts: [Astronaut] = Bundle.main.decode("astronauts.json")
+    static let viewModel = ViewModel()
     static var previews: some View {
-        MissionView(mission: missions[0], astronauts: astronauts)
+        MissionView(mission: viewModel.missions[0], viewModel: viewModel)
     }
 }

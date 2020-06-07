@@ -11,6 +11,7 @@ import SwiftUI
 struct AstronautView: View {
     
     let astronaut: Astronaut
+    let viewModel: ViewModel
     
     var body: some View {
         GeometryReader { geometry in
@@ -23,6 +24,32 @@ struct AstronautView: View {
                     Text(self.astronaut.description)
                         .padding()
                         .layoutPriority(1)
+                    Text("Missions")
+                        .font(.title)
+                        .bold()
+                        .padding(.top)
+                        .padding(.horizontal)
+                        .frame(width: geometry.size.width, alignment: .leading)
+                    //Challenge 2
+                    ForEach(self.viewModel.missionsForAstronaut(astronaut: self.astronaut), id: \.id) { mission in
+                        HStack {
+                            Image(mission.image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 60, height: 60)
+                            .clipShape(Circle())
+                                .overlay(Circle()
+                                    .stroke(Color.secondary, lineWidth: 1))
+                            VStack(alignment: .leading) {
+                                Text(mission.displayName)
+                                    .font(.headline)
+                                Text(mission.formattedLaunchDate)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                        }.padding(.horizontal)
+                    }
+
                 }
             }
         }
@@ -32,8 +59,8 @@ struct AstronautView: View {
 
 struct AstronautView_Previews: PreviewProvider {
     
-    static let astronauts: [Astronaut] = Bundle.main.decode("astronauts.json")
+    static let viewModel = ViewModel()
     static var previews: some View {
-        AstronautView(astronaut: astronauts[0])
+        AstronautView(astronaut: viewModel.astronauts[0], viewModel: viewModel)
     }
 }
