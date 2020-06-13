@@ -278,22 +278,48 @@ This doesn't however allow for different errors to be handled individually, as n
 Lastly, the notion of **failable initialisers**, which are simply initialisers whose `init` keyword may be suffixed with `?` to allow them to return nil if a certain condition is not met (for example) in the initialiser body.
 
 ## Days 13-15 – Consolidation I
+### Swift Review
 I chose to skim read this section as I had just completed the 15 day review of the language and felt with my documentation and experience with the language I could more or less dive into SwiftUI.
 
 ## Days 16-24 – Starting SwiftUI
 
-### Days 16-18 – Project 1: WeSplit
-
-### Day 19 – Challenge Day: LengthConverter
-
-### Days 20-22 – Project 2: GuessTheFlag
-
-### Days 34-24 – Project 3: ViewsAndModifiers
+| Days  | Project   | Name              |
+|-------|-----------|-------------------|
+| 16-18 | 1         | WeSplit           |
+| 19    | Challenge | LengthConverter   |
+| 20-22 | 2         | GuessTheFlag      |
+| 23-24 | 3         | ViewsAndModifiers |
 
 ## Day 25 – Consolidation II
+### Challenge – RockPaperScissors
 
 ## Days 26-34 – Expanding your skills
 
-### Days 26-28 – Project 4: BetterRest
+| Days  | Project | Name         |
+|-------|---------|--------------|
+| 26-28 | 4       | BetterRest   |
+| 29-31 | 5       | WordScramble |
+| 32-34 | 6       | Animations   |
 
-### Days 29-31 – Project 5: WordScramble
+
+## Day 35 – Consolidation III
+### Challenge – MultiplicationGame
+
+## Days 36-46 – Scaling up to bigger apps
+| Days  | Project | Name     |
+|-------|---------|----------|
+| 36-38 | 7       | iExpense |
+| 39-42 | 8       | Moonshot |
+| 43-46 | 9       | Drawing  |
+
+## Days 47-48 – Consolidation IV
+### Challenge – HabitTracker
+
+## Days 49-59 – Focus on data
+| Days  | Project | Name            |
+|-------|---------|-----------------|
+| 49-52 | 10      | CupcakeCorner   |
+| 53-56 | 11      | Bookworm        |
+| 57-59 | 12      | CoreDataProject |
+
+## Days 60-61: Consolidation V
