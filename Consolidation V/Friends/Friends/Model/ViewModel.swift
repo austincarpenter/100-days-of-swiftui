@@ -7,15 +7,18 @@
 //
 
 import SwiftUI
+import CoreData
 
 class ViewModel: ObservableObject {
-    @Published var users = [User]()
     
-    init(users: [User] = []) {
-        self.users = users
+    var moc: NSManagedObjectContext
+    
+    init(moc: NSManagedObjectContext) {
+        self.moc = moc
     }
     
-    func loadData(errorHandler: ((String, String) -> ())?) {
+    func loadData(completionHandler: ((String?, String?) -> ())?) {
+        
         let jsonURL = URL(string: "https://www.hackingwithswift.com/samples/friendface.json")!
         var request = URLRequest(url: jsonURL)
         request.timeoutInterval = 3
@@ -35,34 +38,68 @@ class ViewModel: ObservableObject {
                     message += "An unknown error occurred. Please try again."
                 }
                 
-                return errorHandler!("Data Download Error", message)
+                return completionHandler!("Data Download Error", message)
                 
             }
             
-            guard let users = try? JSONDecoder().decode([User].self, from: data) else {
-                return errorHandler!("Unknown Error", "Unable to interpret data.")
+            guard let users = try? JSONDecoder().decode([UserJSON].self, from: data) as [UserJSON] else {
+                return completionHandler!("Unknown Error", "Unable to interpret data.")
+            }
+    
+            DispatchQueue.main.async {
+                self.createCoreDataData(users: users)
             }
             
-            DispatchQueue.main.async {
-                self.users = users
-            }
+            completionHandler!(nil, nil)
+            
+            UserDefaults.standard.set(true, forKey: "hasDownloadedData")
         }.resume()
     }
     
-    func friendsOfUser(_ user: User) -> [User] {
-        var users = [User]()
-        
-        for friend in user.friends {
-            if let userFriend = self.users.first(where: { $0.id == friend.id }) {
-                users.append(userFriend)
+    func createCoreDataData(users: [UserJSON]) {
+
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+
+        for user in users {
+            let coreDataUser = User(context: self.moc)
+            coreDataUser.id = user.id
+            coreDataUser.name = user.name
+            coreDataUser.age = Int16(user.age)
+            coreDataUser.isActive = user.isActive
+            coreDataUser.company = user.company
+            coreDataUser.email = user.email
+            coreDataUser.about = user.about
+            coreDataUser.registered = formatter.date(from: user.registered) ?? Date()
+            try? self.moc.save()
+
+            //Set tags
+            for tag in user.tags {
+                let coreDataTag = Tag(context: self.moc)
+                coreDataTag.value = tag.lowercased()
+                coreDataUser.tagsArray.append(coreDataTag)
+                try? self.moc.save()
             }
+            
         }
         
-        return users
-    }
+        //Get all users
+        let coreDataUsers = try? self.moc.fetch(NSFetchRequest<User>(entityName: "User"))
     
+        for user in users {
+            for friend in user.friends {
+                if let coreDataUser = coreDataUsers?.first(where: { $0.id == user.id }), let coreDataFriend = coreDataUsers?.first(where: { $0.id == friend.id }) {
+                    coreDataUser.friendsArray.append(coreDataFriend)
+                    try? self.moc.save()
+                }
+            }
+        }
+    }
+
 }
 
-extension ViewModel {
-    static let example = ViewModel(users: User.examples)
-}
+// extension ViewModel {
+//     // static let example = ViewModel(users: UserJSON.examples)
+//     static let example = ViewModel(mo)
+// }

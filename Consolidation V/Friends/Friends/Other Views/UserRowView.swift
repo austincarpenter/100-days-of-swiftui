@@ -10,9 +10,7 @@ import SwiftUI
 
 struct UserRowView: View {
     
-    @ObservedObject var viewModel: ViewModel
     var user: User
-    
     var showsDetailView: Bool
     var showsNextDetailView: Bool
     
@@ -22,7 +20,7 @@ struct UserRowView: View {
                 .foregroundColor(user.isActive ? Color.green : Color.red)
                 .imageScale(.small)
             VStack(alignment: .leading) {
-                Text("\(user.name)")
+                Text("\(user.wrappedName)")
                     .font(.headline)
                 Text("\(user.age) yrs. old")
             }
@@ -33,18 +31,11 @@ struct UserRowView: View {
     
     var body: some View {
         if showsDetailView {
-            return AnyView(NavigationLink(destination: DetailView(viewModel: viewModel, user: user, showsDetailView: showsDetailView, showsNextDetailView: showsNextDetailView)) {
+            return AnyView(NavigationLink(destination: UserDetailView(user: user, showsDetailView: showsDetailView, showsNextDetailView: showsNextDetailView)) {
                 row
             })
         } else {
             return AnyView(row)
         }
-    }
-}
-
-struct UserRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserRowView(viewModel: .example, user: .example, showsDetailView: true, showsNextDetailView: true)
-            .padding()
     }
 }

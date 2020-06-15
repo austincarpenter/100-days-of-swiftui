@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftUI
+import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -22,9 +23,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //Altered Form{} appearance (detail view).
         UITableView.appearance().backgroundColor = .clear
         UITableView.appearance().tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: Double.leastNonzeroMagnitude))
-
-        // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
+                
+        // Get the managed object context from the shared persistent container.
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
+        // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
+        let contentView = ContentView().environment(\.managedObjectContext, context)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

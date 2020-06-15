@@ -1,5 +1,5 @@
 //
-//  DetailView.swift
+//  UserDetailView.swift
 //  Friends
 //
 //  Created by Austin Carpenter on 14/6/20.
@@ -8,11 +8,9 @@
 
 import SwiftUI
 
-struct DetailView: View {
+struct UserDetailView: View {
     
-    @ObservedObject var viewModel = ViewModel()
     var user: User
-    
     var showsDetailView: Bool
     var showsNextDetailView: Bool
 
@@ -30,19 +28,19 @@ struct DetailView: View {
                     }
                     Group {
                         ParameterRowView(name: "Age", value: "\(user.age)")
-                        ParameterRowView(name: "Company", value: user.company)
+                        ParameterRowView(name: "Company", value: user.wrappedCompany)
                         ParameterRowView(name: "User since", value: user.registeredDateString)
-                        ParameterRowView(name: "Email", value: user.email)
+                        ParameterRowView(name: "Email", value: user.wrappedEmail)
                     }
                     Divider()
-                    Text(user.about)
+                    Text(user.wrappedDescription)
                         .font(.callout)
                         .lineLimit(4)
                     Divider()
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack{
-                            ForEach(user.tags, id: \.self){ tag in
-                                Text(tag)
+                            ForEach(user.tagsArray, id: \.self) { tag in
+                                Text(tag.wrappedValue)
                                     .font(.caption)
                                     .padding(7.5)
                                     .foregroundColor(.white)
@@ -61,21 +59,12 @@ struct DetailView: View {
                 .foregroundColor(.primary)
                 .font(.body)
             ) {
-                //Friends list
-                ForEach(viewModel.friendsOfUser(user)) { user in
-                    UserRowView(viewModel: self.viewModel, user: user, showsDetailView: self.showsNextDetailView, showsNextDetailView: false)
+                ForEach(user.friendsArray.sorted(by: { $0.wrappedName < $1.wrappedName }), id:\.id) { user in
+                    UserRowView(user: user, showsDetailView: self.showsNextDetailView, showsNextDetailView: false)
                         .buttonStyle(DefaultButtonStyle())
                 }
             }
         }
-        .navigationBarTitle("\(user.name)")
-    }
-}
-
-struct DetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            DetailView(viewModel: .example, user: .example, showsDetailView: true, showsNextDetailView: true)
-        }
+        .navigationBarTitle("\(user.wrappedName)")
     }
 }
