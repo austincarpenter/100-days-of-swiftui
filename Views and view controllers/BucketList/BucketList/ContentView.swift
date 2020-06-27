@@ -15,12 +15,40 @@ struct ContentView: View {
     @State private var centerCoordinate = CLLocationCoordinate2D()
     @State private var locations = [CodableMKPointAnnotation]()
     @State private var selectedPlace: MKPointAnnotation?
+    
     @State private var showingPlaceDetails = false
     @State private var showingEditScreen = false
+    
+    @State private var showingErrorAlert = false
+    @State private var errorMessage = ""
+    
     @State private var isUnlocked = false
 
+    
+    var alert: Alert? {
+        if showingPlaceDetails {
+            return Alert(title: Text(selectedPlace?.title ?? "Unknown"), message: Text(selectedPlace?.subtitle ?? "Missing place information."), primaryButton: .default(Text("OK")), secondaryButton: .default(Text("Edit")) {
+                self.showingEditScreen = true
+            })
+        } else if showingErrorAlert {
+            return Alert(title: Text("Unable to unlock device"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+        }
+        return nil
+    }
+    
+    
     var body: some View {
-        ZStack {
+        
+        let alertBinding = Binding(
+            get: {
+                self.showingPlaceDetails || self.showingErrorAlert
+            }, set: {
+                self.showingPlaceDetails = $0
+                self.showingErrorAlert = $0
+            }
+        )
+        
+        return ZStack {
             if isUnlocked {
                 MapView(centerCoordinate: $centerCoordinate, selectedPlace: $selectedPlace, showingPlaceDetails: $showingPlaceDetails, annotations: locations)
                     .edgesIgnoringSafeArea(.all)
@@ -42,13 +70,14 @@ struct ContentView: View {
                             self.showingEditScreen = true
                         }) {
                             Image(systemName: "plus")
+                                //Challenge 1, increases tappable region
+                                .padding()
+                                .background(Color.black.opacity(0.75))
+                                .foregroundColor(.white)
+                                .font(.title)
+                                .clipShape(Circle())
+                                .padding(.trailing)
                         }
-                        .padding()
-                        .background(Color.black.opacity(0.75))
-                        .foregroundColor(.white)
-                        .font(.title)
-                        .clipShape(Circle())
-                        .padding(.trailing)
                     }
                 }
             } else {
@@ -61,10 +90,10 @@ struct ContentView: View {
                 .clipShape(Capsule())
             }
         }
-        .alert(isPresented: $showingPlaceDetails) {
-            Alert(title: Text(selectedPlace?.title ?? "Unknown"), message: Text(selectedPlace?.subtitle ?? "Missing place information."), primaryButton: .default(Text("OK")), secondaryButton: .default(Text("Edit")) {
-                self.showingEditScreen = true
-            })
+        .alert(isPresented: alertBinding) {
+            //Challenge 3
+            //Testing custom binding.
+            alert!
         }
         .sheet(isPresented: $showingEditScreen, onDismiss: saveData) {
             if self.selectedPlace != nil {
@@ -111,15 +140,16 @@ struct ContentView: View {
 
                 DispatchQueue.main.async {
                     if success {
-                        // self.loadData()
                         self.isUnlocked = true
                     } else {
-                        // error
+                        self.showingErrorAlert = true
+                        self.errorMessage = "Authentication failed. Please try again."
                     }
                 }
             }
         } else {
-            // no biometrics
+            self.showingErrorAlert = true
+            self.errorMessage = "Please use a device with either Touch ID or Face ID."
         }
     }
 }
