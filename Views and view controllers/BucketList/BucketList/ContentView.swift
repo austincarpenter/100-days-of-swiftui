@@ -36,6 +36,41 @@ struct ContentView: View {
         return nil
     }
     
+    //Challenge 2
+    var unlockedView: some View {
+        Group {
+            MapView(centerCoordinate: $centerCoordinate, selectedPlace: $selectedPlace, showingPlaceDetails: $showingPlaceDetails, annotations: locations)
+                .edgesIgnoringSafeArea(.all)
+            Circle()
+                .fill(Color.blue)
+                .opacity(0.3)
+                .frame(width: 32, height: 32)
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        let newLocation = CodableMKPointAnnotation()
+                        newLocation.title = "Example Location"
+                        newLocation.coordinate = self.centerCoordinate
+                        self.locations.append(newLocation)
+                        
+                        self.selectedPlace = newLocation
+                        self.showingEditScreen = true
+                    }) {
+                        Image(systemName: "plus")
+                            //Challenge 1 (increases tappable region)
+                            .padding()
+                            .background(Color.black.opacity(0.75))
+                            .foregroundColor(.white)
+                            .font(.title)
+                            .clipShape(Circle())
+                            .padding(.trailing)
+                    }
+                }
+            }
+        }
+    }
     
     var body: some View {
         
@@ -50,36 +85,7 @@ struct ContentView: View {
         
         return ZStack {
             if isUnlocked {
-                MapView(centerCoordinate: $centerCoordinate, selectedPlace: $selectedPlace, showingPlaceDetails: $showingPlaceDetails, annotations: locations)
-                    .edgesIgnoringSafeArea(.all)
-                Circle()
-                    .fill(Color.blue)
-                    .opacity(0.3)
-                    .frame(width: 32, height: 32)
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            let newLocation = CodableMKPointAnnotation()
-                            newLocation.title = "Example Location"
-                            newLocation.coordinate = self.centerCoordinate
-                            self.locations.append(newLocation)
-                            
-                            self.selectedPlace = newLocation
-                            self.showingEditScreen = true
-                        }) {
-                            Image(systemName: "plus")
-                                //Challenge 1, increases tappable region
-                                .padding()
-                                .background(Color.black.opacity(0.75))
-                                .foregroundColor(.white)
-                                .font(.title)
-                                .clipShape(Circle())
-                                .padding(.trailing)
-                        }
-                    }
-                }
+                unlockedView
             } else {
                 Button("Unlock Places") {
                     self.authenticate()
