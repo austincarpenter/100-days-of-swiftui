@@ -27,6 +27,7 @@ struct MissionView: View {
                         .frame(maxWidth: geometry.size.width * 0.7)
                         .padding(.bottom)
                         .padding(.top)
+                        .accessibility(label: Text("\(self.mission.displayName) badge"))
                     //Challenge 1
                     Text("Launch Date: " + self.mission.formattedLaunchDate)
                         .bold()
@@ -53,6 +54,7 @@ struct MissionView: View {
                                 VStack(alignment: .leading) {
                                     Text(astronaut.name)
                                         .font(.headline)
+                                        .accessibility(label: Text("\(astronaut.name)."))
                                     self.viewModel.crewRoleForAstronaut(astronaut, andMission: self.mission).map {
                                         Text($0)
                                             .font($0 == "Commander" ? Font.body.bold() : Font.body)

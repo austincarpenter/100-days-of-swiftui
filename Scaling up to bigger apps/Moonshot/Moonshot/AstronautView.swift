@@ -21,6 +21,7 @@ struct AstronautView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: geometry.size.width)
+                        .accessibility(label: Text(self.astronaut.name))
                     Text(self.astronaut.description)
                         .padding()
                         .layoutPriority(1)
@@ -37,19 +38,20 @@ struct AstronautView: View {
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 60, height: 60)
-                            .clipShape(Circle())
+                                .clipShape(Circle())
                                 .overlay(Circle()
-                                    .stroke(Color.secondary, lineWidth: 1))
+                                .stroke(Color.secondary, lineWidth: 1))
+                                .accessibility(hidden: true)
                             VStack(alignment: .leading) {
                                 Text(mission.displayName)
                                     .font(.headline)
                                 Text(mission.formattedLaunchDate)
                                     .foregroundColor(.secondary)
+                                    .accessibility(label: Text("Launch date: \(mission.formattedLaunchDate)"))
                             }
                             Spacer()
                         }.padding(.horizontal)
                     }
-
                 }
             }
         }

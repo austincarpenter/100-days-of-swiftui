@@ -22,24 +22,31 @@ struct ContentView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 44, height: 44)
-                    
+                        .accessibility(hidden: true)
                     VStack(alignment: .leading) {
                         Text(mission.displayName)
                             .font(.headline)
+                            .accessibility(label: Text("\(mission.displayName)."))
                         Text(self.showsLaunchDates ? mission.formattedLaunchDate : self.crewNamesForMission(mission))
                             .font(self.showsLaunchDates ? .body : .callout)
-                    }
+                            .accessibility(label: (self.showsLaunchDates ? Text("Launch date: \(mission.formattedLaunchDate)") : Text("Crew members: \(self.crewNamesForMission(mission))")))
+                    }.accessibility(addTraits: .isStaticText)
                 }
                 
             }
             .navigationBarTitle("Moonshot")
             //Challenge 3
-            .navigationBarItems(trailing: Button(action: {
-                self.showsLaunchDates.toggle()
-            }) {
-                (showsLaunchDates ? Image(systemName: "person.2.fill") : Image(systemName: "calendar"))
-                    .imageScale(.large)
-            })
+            .navigationBarItems(
+                trailing: Button(action: {
+                    self.showsLaunchDates.toggle()
+                }) {
+                    (showsLaunchDates ? Image(systemName: "person.2.fill") : Image(systemName: "calendar"))
+                        .imageScale(.large)
+                        .accessibility(label: (showsLaunchDates ? Text("Show crew members") : Text("Show launch dates")))
+                        .accessibility(addTraits: .isButton)
+                        .accessibility(removeTraits: .isImage)
+                }
+            )
         }
     }
     
