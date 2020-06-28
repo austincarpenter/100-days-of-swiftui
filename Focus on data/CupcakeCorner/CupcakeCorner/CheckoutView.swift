@@ -25,6 +25,7 @@ struct CheckoutView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: geometry.size.width)
+                        .accessibility(hidden: true)
                     Text("Your total is $\(self.viewModel.order.cost, specifier: "%.2f")")
                     Button("Place order") {
                         self.placeOrder()
