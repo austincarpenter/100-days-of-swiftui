@@ -45,7 +45,6 @@ struct ContentView_Challenges: View {
         }
     }
 
-    
     var body: some View {
         NavigationView {
             Form {
@@ -64,6 +63,8 @@ struct ContentView_Challenges: View {
                     Stepper(value: $sleepAmount, in: 4...12, step: 0.25) {
                         Text("\(sleepAmount, specifier: "%g") hours")
                     }
+                    .accessibility(label: Text("Stepper"))
+                    .accessibility(value: Text("Reading: \(sleepAmount, specifier: "%g") hours"))
                 }
                 Section(header:
                     Text("Daily coffee intake")
@@ -89,7 +90,6 @@ struct ContentView_Challenges: View {
             .navigationBarTitle("BetterRest")
         }
     }
-    
 }
 
 struct SwiftUIView_Challenges_Previews: PreviewProvider {
