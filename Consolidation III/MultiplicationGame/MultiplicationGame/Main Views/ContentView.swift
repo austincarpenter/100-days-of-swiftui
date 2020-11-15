@@ -27,6 +27,10 @@ struct ContentView: View {
     @State private var showingAlert = false
     @State private var confettiPresented = false
     
+    var percentageCorrect: String {
+        guard answeredQuestions != 0 else { return "–%" }
+        return (Double(correctAnswers) / Double(answeredQuestions)).percentage
+    }
     // let confettiIntensity: Float = 0.5
     
     var endOfGameText: String {
@@ -85,6 +89,7 @@ struct ContentView: View {
                 self.startGame()
             }
         }
+        .padding(.horizontal)
         .navigationBarTitle("Times Tables", displayMode: .inline)
     }
 
@@ -97,25 +102,35 @@ struct ContentView: View {
                 VStack(spacing: 20) {
                     TextField("0", text: $currentAnswer).multilineTextAlignment(.center)
                         .font(Font.largeTitle.weight(.heavy))
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
+                        .padding(.vertical)
+                        .background(Color(UIColor.systemGray6))
+                        .cornerRadius(5)
+                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color(UIColor.systemGray5)))
+
                     Keypad(font: .title, backspaceAction: {
                         self.currentAnswer = (self.currentAnswer == "0" || self.currentAnswer.count == 1 ? "0" : String(self.currentAnswer.dropLast()))
                     }, keypadAction: { code in
                         self.currentAnswer = (self.currentAnswer == "0" ? "\(code)" : self.currentAnswer + "\(code)")
                     })
-                }.padding(.horizontal, 40)
+                }
+                .padding(.horizontal, 40)
+//                .padding(.horizontal)
                 Divider()
-                Text("\(correctAnswers)/\(answeredQuestions) Correct")
-                    .font(.headline)
-                HStack(spacing: 20) {
+                VStack {
+                    HStack(spacing: 20) {
+                        Text("\(correctAnswers)/\(answeredQuestions)")
+                        Text(percentageCorrect)
+                    }.font(Font.title.weight(.heavy))
+                    Text("Correct").font(.headline)
+                }
+                HStack(spacing: 15) {
                     RoundedButton(text: "Cancel", filled: true, accentColor: .red, maxHeight: 50) {
                         self.endGame()
                     }
                     RoundedButton(text: currentQuestion < questions.count - 1 ? "Next" : "Finish", filled: true, maxHeight: 50) {
                         self.nextQuestion()
                     }
-                }
+                }.padding(.horizontal)
             }
             if confettiPresented {
                 ConfettiView()
@@ -150,7 +165,7 @@ struct ContentView: View {
                         .background(Color.white)
                 }
             }
-            .padding()
+            .padding(.top)
         }
     }
     

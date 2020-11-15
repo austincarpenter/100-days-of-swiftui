@@ -35,10 +35,10 @@ struct ConfettiView: View {
         }
     }
 
-    private func generateRandomPositionInTopHalf(of size: CGSize) -> CGPoint {
+    private func generateRandomPositionInTop(of size: CGSize, division: Int) -> CGPoint {
         return CGPoint(
             x: CGFloat.random(in: 0...size.width),
-            y: CGFloat.random(in: 0...size.height/2)
+            y: CGFloat.random(in: 0...size.height/CGFloat(division))
         )
     }
     
@@ -53,13 +53,13 @@ struct ConfettiView: View {
         GeometryReader { geometry in
             Wrap(self.confettiView()) {
                 if let sublayers = $0.layer.sublayers, let confetti = (sublayers[0] as? CAEmitterLayer) {
-                    confetti.emitterPosition = self.generateRandomPositionInTopHalf(of: geometry.size)
+                    confetti.emitterPosition = self.generateRandomPositionInTop(of: geometry.size, division: 4)
                     confetti.emitterShape = .point
                     confetti.emitterSize = CGSize(width: geometry.size.width, height: 2.0)
                     confetti.emitterCells = self.generateEmitterCells()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                        confetti.emitterPosition = self.generateRandomPositionInTopHalf(of: geometry.size)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
+                        confetti.emitterPosition = self.generateRandomPositionInTop(of: geometry.size, division: 4)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
                             confetti.birthRate = 0.0
                         }
                     }

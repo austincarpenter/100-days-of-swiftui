@@ -12,7 +12,7 @@ import SwiftUI
 struct Keypad: View {
 
     var font: Font = .title
-    var padding: CGFloat = 10.0
+    var padding: CGFloat = 5.0
     var backspaceAction: (() -> Void)?
     var keypadAction: ((Int) -> Void)?
     
